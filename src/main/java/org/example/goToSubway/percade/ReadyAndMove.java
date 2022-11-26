@@ -31,7 +31,7 @@ public class ReadyAndMove {
         this.arrive = arrive;
     }
 
-    public void gotoSubway(){
+    public void gotoSubway() {
         System.out.println("go to subway");
 
         shower.move();
