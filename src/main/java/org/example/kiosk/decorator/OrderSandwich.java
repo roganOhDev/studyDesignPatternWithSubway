@@ -11,12 +11,32 @@ import org.example.kiosk.decorator.condiment.sandwich.MeatSandwich;
 import org.example.kiosk.decorator.condiment.sandwich.Sandwich;
 import org.example.kiosk.decorator.condiment.sandwich.SandwichType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class OrderSandwich {
-    public void order() {
+    public Map<SandwichType, List<Sandwich>> order() {
         showMenus();
 
-        order(SandwichType.MEAT);
-        order(SandwichType.EGG);
+        final var shoppingBasket = new HashMap<SandwichType, List<Sandwich>>();
+
+        final var eggShoppingBasket = new ArrayList<Sandwich>();
+        final var meatShoppingBasket = new ArrayList<Sandwich>();
+
+        meatShoppingBasket.add(order(SandwichType.MEAT));
+        eggShoppingBasket.add(order(SandwichType.EGG));
+        eggShoppingBasket.add(order(SandwichType.EGG));
+
+        shoppingBasket.put(SandwichType.EGG, eggShoppingBasket);
+        shoppingBasket.put(SandwichType.MEAT, meatShoppingBasket);
+
+        return shoppingBasket;
+
+//        return shoppingBasket.stream()
+//                .collect(Collectors.groupingBy(Sandwich::getType));
     }
 
     private static void showMenus() {
@@ -35,7 +55,7 @@ public class OrderSandwich {
         System.out.println("--------------------------------------------");
     }
 
-    private static void order(final SandwichType type) {
+    private static Sandwich order(final SandwichType type) {
         var sandwich = chooseSandwich(type);
 
         sandwich = addLettuce(sandwich);
@@ -43,6 +63,8 @@ public class OrderSandwich {
         sandwich = addSault(sandwich);
 
         System.out.println(sandwich.getDescription() + " : " + sandwich.cost() + "원");
+
+        return sandwich;
     }
 
     private static Sandwich addLettuce(Sandwich sandwich) {
