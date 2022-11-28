@@ -28,9 +28,9 @@ public class Main {
         final var people = new ArrayList<>(List.of(A, B, C));
 
         gotoSubway();
-        final var sandwiches = orderSandwich();
+        final var sandwichBasket = orderSandwich();
 
-        final var notReceivedPeople = distribute(sandwiches, people);
+        final var notReceivedPeople = distribute(sandwichBasket, people);
 
         // Proxy pattern 으로 다시 주문
     }
@@ -44,13 +44,13 @@ public class Main {
         System.out.println("\n");
     }
 
-    private static Map<SandwichType, List<Sandwich>> orderSandwich() {
+    private static Map<SandwichType, ArrayList<Sandwich>> orderSandwich() {
         final var orderSandwich = new OrderSandwich();
 
         return orderSandwich.order();
     }
 
-    private static List<NotReceived> distribute(final Map<SandwichType, List<Sandwich>> sandwiches, final List<Person> people) {
+    private static List<NotReceived> distribute(final Map<SandwichType, ArrayList<Sandwich>> sandwichBasket, final List<Person> people) {
         final var distribute = new Distribute();
 
         final var D = new Person("D", SandwichType.MEAT);
@@ -62,6 +62,6 @@ public class Main {
         newPeopleGroup.add(E);
         newPeopleGroup.add(F);
 
-        return distribute.action(sandwiches, newPeopleGroup);
+        return distribute.action(sandwichBasket, newPeopleGroup);
     }
 }

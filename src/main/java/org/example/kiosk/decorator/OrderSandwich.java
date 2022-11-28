@@ -13,15 +13,13 @@ import org.example.kiosk.decorator.condiment.sandwich.SandwichType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OrderSandwich {
-    public Map<SandwichType, List<Sandwich>> order() {
+    public Map<SandwichType, ArrayList<Sandwich>> order() {
         showMenus();
 
-        final var shoppingBasket = new HashMap<SandwichType, List<Sandwich>>();
+        final var shoppingBasket = new HashMap<SandwichType, ArrayList<Sandwich>>();
 
         final var eggShoppingBasket = new ArrayList<Sandwich>();
         final var meatShoppingBasket = new ArrayList<Sandwich>();
