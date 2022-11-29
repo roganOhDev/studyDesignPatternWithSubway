@@ -1,5 +1,6 @@
 package org.example.kiosk.decorator;
 
+import org.example.Person;
 import org.example.cook.flyweight.Cook;
 import org.example.kiosk.decorator.condiment.Cheese.American;
 import org.example.kiosk.decorator.condiment.Cheese.Shred;
@@ -11,13 +12,16 @@ import org.example.kiosk.decorator.condiment.sandwich.EggSandwich;
 import org.example.kiosk.decorator.condiment.sandwich.MeatSandwich;
 import org.example.kiosk.decorator.condiment.sandwich.Sandwich;
 import org.example.kiosk.decorator.condiment.sandwich.SandwichType;
+import org.example.Order;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class OrderSandwich {
-    public Map<SandwichType, ArrayList<Sandwich>> order() {
+public class OrderSandwich implements Order {
+    @Override
+    public Map<SandwichType, ArrayList<Sandwich>> order(List<Person> people) {
         showMenus();
 
         final var shoppingBasket = new HashMap<SandwichType, ArrayList<Sandwich>>();
@@ -25,17 +29,19 @@ public class OrderSandwich {
         final var eggShoppingBasket = new ArrayList<Sandwich>();
         final var meatShoppingBasket = new ArrayList<Sandwich>();
 
-        meatShoppingBasket.add(order(SandwichType.MEAT));
-        eggShoppingBasket.add(order(SandwichType.EGG));
-        eggShoppingBasket.add(order(SandwichType.EGG));
+        people.forEach(person -> {
+            if (person.getSandwichType().equals(SandwichType.MEAT)) {
+                meatShoppingBasket.add(order(SandwichType.MEAT));
+
+            } else if (person.getSandwichType().equals(SandwichType.EGG)) {
+                eggShoppingBasket.add(order(SandwichType.EGG));
+            }
+        });
 
         shoppingBasket.put(SandwichType.EGG, eggShoppingBasket);
         shoppingBasket.put(SandwichType.MEAT, meatShoppingBasket);
 
         return shoppingBasket;
-
-//        return shoppingBasket.stream()
-//                .collect(Collectors.groupingBy(Sandwich::getType));
     }
 
     private static void showMenus() {

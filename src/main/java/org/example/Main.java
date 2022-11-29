@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.distribute.Distribute;
-import org.example.distribute.NotReceived;
 import org.example.goToSubway.percade.ReadyAndMove;
 import org.example.goToSubway.percade.move.Run;
 import org.example.goToSubway.percade.move.Walk;
@@ -15,6 +14,7 @@ import org.example.goToSubway.percade.ready.Shower;
 import org.example.kiosk.decorator.OrderSandwich;
 import org.example.kiosk.decorator.condiment.sandwich.Sandwich;
 import org.example.kiosk.decorator.condiment.sandwich.SandwichType;
+import org.example.phonecall.proxy.FriendOrderSandwich;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,11 @@ public class Main {
         final var people = new ArrayList<>(List.of(A, B, C));
 
         gotoSubway();
-        final var sandwichBasket = orderSandwich();
+        final var sandwichBasket = orderSandwich(people);
 
         final var notReceivedPeople = distribute(sandwichBasket, people);
 
-        // Proxy pattern 으로 다시 주문
+        friendOrderSandwich(notReceivedPeople);
     }
 
     private static void gotoSubway() {
@@ -44,13 +44,13 @@ public class Main {
         System.out.println("\n");
     }
 
-    private static Map<SandwichType, ArrayList<Sandwich>> orderSandwich() {
+    private static Map<SandwichType, ArrayList<Sandwich>> orderSandwich(List<Person> people) {
         final var orderSandwich = new OrderSandwich();
 
-        return orderSandwich.order();
+        return orderSandwich.order(people);
     }
 
-    private static List<NotReceived> distribute(final Map<SandwichType, ArrayList<Sandwich>> sandwichBasket, final List<Person> people) {
+    private static List<Person> distribute(final Map<SandwichType, ArrayList<Sandwich>> sandwichBasket, final List<Person> people) {
         final var distribute = new Distribute();
 
         final var D = new Person("D", SandwichType.MEAT);
@@ -63,5 +63,11 @@ public class Main {
         newPeopleGroup.add(F);
 
         return distribute.action(sandwichBasket, newPeopleGroup);
+    }
+
+    private static void friendOrderSandwich(List<Person> notReceivedPeople) {
+        final var order = new FriendOrderSandwich();
+
+        order.order(notReceivedPeople);
     }
 }
