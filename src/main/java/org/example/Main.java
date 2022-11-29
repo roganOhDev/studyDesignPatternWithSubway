@@ -14,7 +14,7 @@ import org.example.goToSubway.percade.ready.Shower;
 import org.example.kiosk.decorator.OrderSandwich;
 import org.example.kiosk.decorator.condiment.sandwich.Sandwich;
 import org.example.kiosk.decorator.condiment.sandwich.SandwichType;
-import org.example.phonecall.proxy.FriendOrderSandwich;
+import org.example.friendOrder.proxy.FriendOrderSandwich;
 
 import java.util.ArrayList;
 import java.util.List;

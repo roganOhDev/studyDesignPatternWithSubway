@@ -1,4 +1,4 @@
-package org.example.phonecall.proxy;
+package org.example.friendOrder.proxy;
 
 import org.example.Order;
 import org.example.Person;
