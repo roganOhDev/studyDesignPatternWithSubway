@@ -1,4 +1,4 @@
-package org.example.distribute.flyweight;
+package org.example.distribute;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.distribute.flyweight.Distribute;
-import org.example.distribute.flyweight.NotReceived;
+import org.example.distribute.Distribute;
+import org.example.distribute.NotReceived;
 import org.example.goToSubway.percade.ReadyAndMove;
 import org.example.goToSubway.percade.move.Run;
 import org.example.goToSubway.percade.move.Walk;

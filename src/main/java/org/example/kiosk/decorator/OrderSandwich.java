@@ -1,5 +1,6 @@
 package org.example.kiosk.decorator;
 
+import org.example.cook.flyweight.Cook;
 import org.example.kiosk.decorator.condiment.Cheese.American;
 import org.example.kiosk.decorator.condiment.Cheese.Shred;
 import org.example.kiosk.decorator.condiment.Souce.Sault;
@@ -61,6 +62,8 @@ public class OrderSandwich {
         sandwich = addSault(sandwich);
 
         System.out.println(sandwich.getDescription() + " : " + sandwich.cost() + "원");
+
+        Cook.cook(type);
 
         return sandwich;
     }

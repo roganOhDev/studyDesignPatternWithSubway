@@ -1,4 +1,4 @@
-package org.example.distribute.flyweight;
+package org.example.distribute;
 
 import org.example.Person;
 import org.example.kiosk.decorator.condiment.sandwich.Sandwich;
