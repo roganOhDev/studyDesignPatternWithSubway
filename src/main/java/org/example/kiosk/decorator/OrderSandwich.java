@@ -2,6 +2,7 @@ package org.example.kiosk.decorator;
 
 import org.example.Person;
 import org.example.cook.flyweight.Cook;
+import org.example.cook.flyweight.SandwichFactory;
 import org.example.kiosk.decorator.condiment.Cheese.American;
 import org.example.kiosk.decorator.condiment.Cheese.Shred;
 import org.example.kiosk.decorator.condiment.Souce.Sault;
@@ -25,16 +26,17 @@ public class OrderSandwich implements Order {
         showMenus();
 
         final var shoppingBasket = new HashMap<SandwichType, ArrayList<Sandwich>>();
+        final var cookSandwiches = new ArrayList<SandwichFactory>();
 
         final var eggShoppingBasket = new ArrayList<Sandwich>();
         final var meatShoppingBasket = new ArrayList<Sandwich>();
 
         people.forEach(person -> {
             if (person.getSandwichType().equals(SandwichType.MEAT)) {
-                meatShoppingBasket.add(order(SandwichType.MEAT));
+                meatShoppingBasket.add(order(person, cookSandwiches));
 
             } else if (person.getSandwichType().equals(SandwichType.EGG)) {
-                eggShoppingBasket.add(order(SandwichType.EGG));
+                eggShoppingBasket.add(order(person, cookSandwiches));
             }
         });
 
@@ -60,8 +62,8 @@ public class OrderSandwich implements Order {
         System.out.println("--------------------------------------------");
     }
 
-    private static Sandwich order(final SandwichType type) {
-        var sandwich = chooseSandwich(type);
+    private static Sandwich order(final Person person, ArrayList<SandwichFactory> cookedSandwiches) {
+        var sandwich = chooseSandwich(person.getSandwichType());
 
         sandwich = addLettuce(sandwich);
         sandwich = addAmericanCheese(sandwich);
@@ -69,7 +71,8 @@ public class OrderSandwich implements Order {
 
         System.out.println(sandwich.getDescription() + " : " + sandwich.cost() + "원");
 
-        Cook.cook(type);
+        final var cookedSandwich = new SandwichFactory(Cook.cook(person.getSandwichType()), person);
+        cookedSandwiches.add(cookedSandwich);
 
         return sandwich;
     }
